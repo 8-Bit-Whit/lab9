@@ -1,15 +1,17 @@
-// Updated template to match new data structure
+// Updated template for team members
 var template = `
     {{#data}}
     <div class="profile-card">
         <div class="profile-header">
-            <div class="profile-icon">{{initial}}</div>
+            <div class="profile-icon">{{FirstInitial}}</div>
             <div class="profile-name">{{Name}}</div>
         </div>
         <div class="profile-details">
-            <div class="profile-position">{{Position}}</div>
-            <div>Major: {{Major}}</div>
-            <div>Year: {{Year}}</div>
+            <div class="profile-position">🎯 {{Position}}</div>
+            <div class="profile-education">
+                <div>🎓 {{Major}}</div>
+                <div>📚 {{Year}} Year</div>
+            </div>
         </div>
     </div>
     {{/data}}
@@ -18,16 +20,16 @@ var template = `
 // Get the 'output' div element
 var output = document.getElementById('output');
 
-// Fetch JSON data and add initials before rendering
+// Fetch JSON data and process it
 fetch('data.json')
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
-        // Add initials for each person based on their name
+        // Add first initial for each person
         data = data.map(person => ({
             ...person,
-            initial: person.Name ? person.Name.charAt(0) : person.name.charAt(0)
+            FirstInitial: (person.Name || person.name).charAt(0)
         }));
         
         // Render the data using the template
