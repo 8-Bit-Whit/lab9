@@ -1,4 +1,4 @@
-// Simple template for team members
+// Updated template for team members
 var template = `
     {{#.}}
     <div class="profile-card">
@@ -7,19 +7,35 @@ var template = `
             <div class="profile-name">{{Name}}</div>
         </div>
         <div class="profile-details">
-            <div class="profile-position">{{Position}}</div>
-            <div>{{Major}}</div>
-            <div>{{Year}}</div>
+            <div class="profile-position">👩‍💻 {{Position}}</div>
+            <div class="profile-education">
+                <div>🎓 Major: {{Major}}</div>
+                <div>📚 Year: {{Year}}</div>
+            </div>
         </div>
     </div>
     {{/.}}
 `;
 
+// Get the 'output' div element
+var output = document.getElementById('output');
+
+// Fetch JSON data and process it
 fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-        const output = document.getElementById('output');
-        const rendered = Mustache.render(template, data);
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        // Fix name capitalization inconsistency
+        data = data.map(person => ({
+            ...person,
+            Name: person.Name || person.name  // Handle both 'Name' and 'name'
+        }));
+        
+        // Render the data using the template
+        var rendered = Mustache.render(template, data);
         output.innerHTML = rendered;
     })
-    .catch(error => console.error('Error:', error));
+    .catch(function(error) {
+        console.error('Error:', error);
+    });
