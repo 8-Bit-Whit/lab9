@@ -1,6 +1,6 @@
 // Updated template for team members
 var template = `
-    {{#.}}
+    {{#data}}
     <div class="profile-card">
         <div class="profile-header">
             <div class="profile-icon">{{Name.0}}</div>
@@ -14,7 +14,7 @@ var template = `
             </div>
         </div>
     </div>
-    {{/.}}
+    {{/data}}
 `;
 
 // Get the 'output' div element
@@ -26,11 +26,21 @@ fetch('data.json')
         return response.json();
     })
     .then(function(data) {
-        // Fix name capitalization inconsistency
-        data = data.map(person => ({
-            ...person,
-            Name: person.Name || person.name  // Handle both 'Name' and 'name'
-        }));
+        // Fix name capitalization inconsistency and wrap data in an object
+        const processedData = {
+            data: data.map(person => ({
+                ...person,
+                Name: person.Name || person.name  // Handle both 'Name' and 'name'
+            }))
+        };
+        
+        // Render the data using the template
+        var rendered = Mustache.render(template, processedData);
+        output.innerHTML = rendered;
+    })
+    .catch(function(error) {
+        console.error('Error:', error);
+    });
         
         // Render the data using the template
         var rendered = Mustache.render(template, data);
