@@ -1,0 +1,26 @@
+[
+    {
+        "Name": "Shukria Gulzar",
+        "Position": "President",
+        "Major": "Computer Science",
+        "Year": "Senior"
+    },
+    {
+        "Name": "Elicia Perez",
+        "Position": "Vice President",
+        "Major": "Computer Science",
+        "Year": "Senior"
+    },
+    {
+        "name": "Whitney Haddad",
+        "Position": "Secretary and Social Media Manger",
+        "Major": "Computer Science",
+        "Year": "Senior"
+    },
+  {
+        "name": "Nancy Urrutia Perez",
+        "Position": "Treasurer",
+        "Major": "Computer Engineering",
+        "Year": "Senior"
+    }
+]
