@@ -1,20 +1,20 @@
 // Updated template for team members
 var template = `
-    {{#data}}
+    {{#.}}
     <div class="profile-card">
         <div class="profile-header">
-            <div class="profile-icon">{{FirstInitial}}</div>
+            <div class="profile-icon">{{Name.0}}</div>
             <div class="profile-name">{{Name}}</div>
         </div>
         <div class="profile-details">
-            <div class="profile-position">🎯 {{Position}}</div>
+            <div class="profile-position">👩‍💻 {{Position}}</div>
             <div class="profile-education">
-                <div>🎓 {{Major}}</div>
-                <div>📚 {{Year}} Year</div>
+                <div>🎓 Major: {{Major}}</div>
+                <div>📚 Year: {{Year}}</div>
             </div>
         </div>
     </div>
-    {{/data}}
+    {{/.}}
 `;
 
 // Get the 'output' div element
@@ -26,14 +26,14 @@ fetch('data.json')
         return response.json();
     })
     .then(function(data) {
-        // Add first initial for each person
+        // Fix name capitalization inconsistency
         data = data.map(person => ({
             ...person,
-            FirstInitial: (person.Name || person.name).charAt(0)
+            Name: person.Name || person.name  // Handle both 'Name' and 'name'
         }));
         
         // Render the data using the template
-        var rendered = Mustache.render(template, { data: data });
+        var rendered = Mustache.render(template, data);
         output.innerHTML = rendered;
     })
     .catch(function(error) {
