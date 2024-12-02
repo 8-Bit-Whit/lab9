@@ -1,14 +1,15 @@
-// Updated template with better structure
+// Updated template to match new data structure
 var template = `
     {{#data}}
     <div class="profile-card">
         <div class="profile-header">
             <div class="profile-icon">{{initial}}</div>
-            <div class="profile-name">{{name}}</div>
+            <div class="profile-name">{{Name}}</div>
         </div>
         <div class="profile-details">
-            <div>Age: {{age}} years old</div>
-            <div class="profile-city">📍 {{city}}</div>
+            <div class="profile-position">{{Position}}</div>
+            <div>Major: {{Major}}</div>
+            <div>Year: {{Year}}</div>
         </div>
     </div>
     {{/data}}
@@ -17,12 +18,18 @@ var template = `
 // Get the 'output' div element
 var output = document.getElementById('output');
 
-// Fetch JSON data from the file
+// Fetch JSON data and add initials before rendering
 fetch('data.json')
     .then(function(response) {
         return response.json();
     })
     .then(function(data) {
+        // Add initials for each person based on their name
+        data = data.map(person => ({
+            ...person,
+            initial: person.Name ? person.Name.charAt(0) : person.name.charAt(0)
+        }));
+        
         // Render the data using the template
         var rendered = Mustache.render(template, { data: data });
         output.innerHTML = rendered;
